@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.zhengguan.OMGPersonal.dao.UserDao">
+
+
+    <select id="selectOMGAllsy_user" resultType="com.zhengguan.OMGPersonal.entities.User">
+        select * from  omg.user
+    </select>
+
+    <!-- 根据编号删除用户信息 -->
+    <delete id="deleteOMGuser" parameterType="com.zhengguan.OMGPersonal.entities.User">
+        delete from user where userId=#{userId}
+    </delete>
+    <!-- 添加用户信息 -->
+    <insert id="addOMGuser" parameterType="com.zhengguan.OMGPersonal.entities.User">
+
+    </insert>
+    <!-- 修改用户信息 -->
+    <update id="updateOMGuser" parameterType="com.zhengguan.OMGPersonal.entities.User">
+       UPDATE user SET userAn=#{userAn},userName=#{userName},userSex=#{userSex},userTephone=#{userTephone},userEmail=#{userEmail},userBirthday=#{userBirthday},userAddress=#{userAddress}  WHERE userId=#{userId}
+    </update>
+
+    <!--根据用户编号查询-->
+    <select id="selectOMGuserById" resultType="com.zhengguan.OMGPersonal.entities.User">
+          select * from user where userId=#{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.zhengguan.OMGPersonal.dao.OMGDao">
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <!-- 后台用户登录 -->
+    <select id="selectByAdmName" resultType="com.zhengguan.OMGPersonal.entities.AdmUser">
+      select admName,admPassword,admSex,admTephone from adm_user where admName=#{admName}
+    </select>
+    <!--后台用户注册-->
+    <select id="registerAdmName" resultType="com.zhengguan.OMGPersonal.entities.AdmUser">
+    INSERT INTO adm_user(admName,admPassword,admSex,admTephone)VALUES(#{admName},#{admPassword},#{admName},#{admTephone})
+    </select>
+
+    <!--根据商品编号查询商品所有信息-->
+    <select id="selectOMGById_product" resultType="com.zhengguan.OMGPersonal.entities.Commodity">
+        SELECT
+    commodity.cChainId,commodity.cName,commodity.cModel,
+    commodity.cPrice,commodity.cDescribe,commodity.cId,commodity.cState,commodity.imgName,commodity.cTypeId,commodity.cShellId,commodity.cColorId,commodity.cDiameterId,
+    commodity.cEspeciallyId,commodity.cMovementId,commodity.cWaterproofId,ctypetb.cTypeId,ctypetb.cTName,
+    cshelltb.cShellId,cshelltb.cSName,cchaintb.cChainId,cchaintb.cCName,ccolortb.cColorId,ccolortb.cCoName,cdiametertb.cDiameterId,cdiametertb.cDName,cespeciallytb.cEspeciallyId,
+    cespeciallytb.cEName,cmovementtb.cMovementId,cmovementtb.cMName,cwaterprooftb.cWaterproofId,cwaterprooftb.cWName FROM commodity
+    INNER JOIN ctypetb ON commodity.cTypeId = ctypetb.cTypeId
+    INNER JOIN cshelltb ON commodity.cShellId = cshelltb.cShellId
+    INNER JOIN cchaintb ON commodity.cChainId = cchaintb.cChainId
+    INNER JOIN ccolortb ON commodity.cColorId = ccolortb.cColorId
+    INNER JOIN cdiametertb ON commodity.cDiameterId = cdiametertb.cDiameterId
+    INNER JOIN cespeciallytb ON commodity.cEspeciallyId = cespeciallytb.cEspeciallyId
+    INNER JOIN cmovementtb ON commodity.cMovementId = cmovementtb.cMovementId
+    INNER JOIN cwaterprooftb ON commodity.cWaterproofId = cwaterprooftb.cWaterproofId
+        where cId=#{cId}
+    </select>
+
+    <!--&lt;!&ndash;根据多条件查询商品信息&ndash;&gt;-->
+    <!--<select id="selectOMGByManytj_product" resultType="com.zhengguan.OMGPersonal.entities.Commodity">-->
+      <!--SELECT-->
+    <!--commodity.cChainId,commodity.cName,commodity.cModel,-->
+    <!--commodity.cPrice,commodity.cDescribe,commodity.cId,commodity.cState,commodity.imgId,commodity.cTypeId,commodity.cShellId,commodity.cColorId,commodity.cDiameterId,-->
+    <!--commodity.cEspeciallyId,commodity.cMovementId,commodity.cWaterproofId,imgtb.imgId,imgtb.imgRoute,imgtb.imgName,imgtb.imgDescribe,ctypetb.cTypeId,ctypetb.cTName,-->
+    <!--cshelltb.cShellId,cshelltb.cSName,cchaintb.cChainId,cchaintb.cCName,ccolortb.cColorId,ccolortb.cCoName,cdiametertb.cDiameterId,cdiametertb.cDName,cespeciallytb.cEspeciallyId,-->
+    <!--cespeciallytb.cEName,cmovementtb.cMovementId,cmovementtb.cMName,cwaterprooftb.cWaterproofId,cwaterprooftb.cWName FROM commodity-->
+    <!--INNER JOIN imgtb ON commodity.imgId = imgtb.imgId-->
+    <!--INNER JOIN ctypetb ON commodity.cTypeId = ctypetb.cTypeId-->
+    <!--INNER JOIN cshelltb ON commodity.cShellId = cshelltb.cShellId-->
+    <!--INNER JOIN cchaintb ON commodity.cChainId = cchaintb.cChainId-->
+    <!--INNER JOIN ccolortb ON commodity.cColorId = ccolortb.cColorId-->
+    <!--INNER JOIN cdiametertb ON commodity.cDiameterId = cdiametertb.cDiameterId-->
+    <!--INNER JOIN cespeciallytb ON commodity.cEspeciallyId = cespeciallytb.cEspeciallyId-->
+    <!--INNER JOIN cmovementtb ON commodity.cMovementId = cmovementtb.cMovementId-->
+    <!--INNER JOIN cwaterprooftb ON commodity.cWaterproofId = cwaterprooftb.cWaterproofId-->
+       <!--<where>-->
+           <!--<if test="cName!=null and cName!=''">-->
+               <!--and cName like concat(concat('%',#{cName}),'%');-->
+           <!--</if>-->
+
+
+       <!--</where>-->
+    <!--</select>-->
+
+
+    <!--获取商品所有信息-->
+    <select id="selectOMGAllsy_product" resultMap="selectOMGAll_Map"  >
+      SELECT comm.cId,comm.cName,comm.cModel,comm.cPrice,comm.cDescribe,comm.cState,cty.cTName,cshe.cSName,ccha.cCName,ccolo.cCoName,cdia.cDName,ces.cEName,cmo.cMName,cwa.cWName,comm.imgName,comm.cTypeId,
+        comm.cShellId,comm.cChainId,comm.cColorId,comm.cDiameterId,comm.cEspeciallyId,comm.cMovementId,comm.cWaterproofId
+        from commodity comm,ctypetb cty,cshelltb cshe,cchaintb ccha,ccolortb ccolo,cdiametertb cdia,cespeciallytb ces,cmovementtb cmo,cwaterprooftb cwa
+         WHERE  comm.cTypeId = cty.cTypeId
+        and comm.cShellId = cshe.cShellId
+        and comm.cChainId = ccha.cChainId
+        and comm.cColorId = ccolo.cColorId
+        and comm.cDiameterId = cdia.cDiameterId
+        and comm.cEspeciallyId = ces.cEspeciallyId
+        and comm.cMovementId = cmo.cMovementId
+        and comm.cWaterproofId = cwa.cWaterproofId
+    </select>
+
+    <!--组合查询商品信息-->
+    <select id="selectOMGAll_product" resultMap="selectOMGAll_Map" parameterType="map">
+        SELECT comm.cId,comm.cName,comm.cModel,comm.cPrice,comm.cDescribe,comm.cState,comm.imgName,cty.cTName,cshe.cSName,ccha.cCName,ccolo.cCoName,cdia.cDName,ces.cEName,cmo.cMName,cwa.cWName,comm.cTypeId,
+        comm.cShellId,comm.cChainId,comm.cColorId,comm.cDiameterId,comm.cEspeciallyId,comm.cMovementId,comm.cWaterproofId
+        from commodity comm,ctypetb cty,cshelltb cshe,cchaintb ccha,ccolortb ccolo,cdiametertb cdia,cespeciallytb ces,cmovementtb cmo,cwaterprooftb cwa
+        WHERE   comm.cTypeId = cty.cTypeId
+        and comm.cShellId = cshe.cShellId
+        and comm.cChainId = ccha.cChainId
+        and comm.cColorId = ccolo.cColorId
+        and comm.cDiameterId = cdia.cDiameterId
+        and comm.cEspeciallyId = ces.cEspeciallyId
+        and comm.cMovementId = cmo.cMovementId
+        and comm.cWaterproofId = cwa.cWaterproofId
+        <if test="cTypeId !=0 and cTypeId != null">
+            and comm.cTypeId=#{cTypeId}
+        </if>
+        <if test="cShellId !=0 and cShellId != null">
+            and comm.cShellId=#{cShellId}
+        </if>
+        <if test="cChainId !=0 and cChainId != null">
+            and comm.cChainId=#{cChainId}
+        </if>
+        <if test="cColorId !=0 and cColorId != null">
+            and comm.cColorId=#{cColorId}
+        </if>
+        <if test="cDiameterId !=0 and cDiameterId != null">
+            and comm.cDiameterId=#{cDiameterId}
+        </if>
+        <if test="cEspeciallyId !=0 and cEspeciallyId != null">
+            and comm.cEspeciallyId=#{cEspeciallyId}
+        </if>
+        <if test="cMovementId !=0 and cMovementId != null">
+            and comm.cMovementId=#{cMovementId}
+        </if>
+        <if test="cWaterproofId !=0 and cWaterproofId != null">
+            and comm.cWaterproofId=#{cWaterproofId}
+        </if>
+    </select>
+    <!--关联组合查询商品信息结果映射-->
+    <resultMap id="selectOMGAll_Map" type="com.zhengguan.OMGPersonal.entities.Commodity">
+        <id property="cId" column="cId"></id>
+        <result property="cName" column="cName"></result>
+        <result property="cModel" column="cModel"></result>
+        <result property="cPrice" column="cPrice"></result>
+        <result property="cDescribe" column="cDescribe"></result>
+        <result property="cState" column="cState"></result>
+        <result property="imgName" column="imgName"></result>
+        <result property="cTypeId" column="cTypeId"></result>
+        <result property="cShellId" column="cShellId"></result>
+        <result property="cChainId" column="cChainId"></result>
+        <result property="cColorId" column="cColorId"></result>
+        <result property="cDiameterId" column="cDiameterId"></result>
+        <result property="cEspeciallyId" column="cEspeciallyId"></result>
+        <result property="cMovementId" column="cMovementId"></result>
+        <result property="cWaterproofId" column="cWaterproofId"></result>
+        <!--映射关系，指定属性与属性的类型-->
+        <association property="ctypetb" javaType="com.zhengguan.OMGPersonal.entities.Ctypetb">
+            <id property="cTypeId" column="cTypeId"></id>
+            <result property="cTName" column="cTName"></result>
+        </association>
+        <association property="cshelltb" javaType="com.zhengguan.OMGPersonal.entities.Cshelltb">
+            <id property="cShellId" column="cShellId"></id>
+            <result property="cSName" column="cSName"></result>
+        </association>
+        <association property="cchaintb" javaType="com.zhengguan.OMGPersonal.entities.Cchaintb">
+            <id property="cChainId" column="cChainId"></id>
+            <result property="cCName" column="cCName"></result>
+        </association>
+        <association property="ccolortb" javaType="com.zhengguan.OMGPersonal.entities.Ccolortb">
+            <id property="cColorId" column="cColorId"></id>
+            <result property="cCoName" column="cCoName"></result>
+        </association>
+        <association property="cdiametertb" javaType="com.zhengguan.OMGPersonal.entities.Cdiametertb">
+            <id property="cDiameterId" column="cDiameterId"></id>
+            <result property="cDName" column="cDName"></result>
+        </association>
+        <association property="cespeciallytb" javaType="com.zhengguan.OMGPersonal.entities.Cespeciallytb">
+            <id property="cEspeciallyId" column="cEspeciallyId"></id>
+            <result property="cEName" column="cEName"></result>
+        </association>
+        <association property="cmovementtb" javaType="com.zhengguan.OMGPersonal.entities.Cmovementtb">
+            <id property="cMovementId" column="cMovementId"></id>
+            <result property="cMName" column="cMName"></result>
+        </association>
+        <association property="cwaterprooftb" javaType="com.zhengguan.OMGPersonal.entities.Cwaterprooftb">
+            <id property="cWaterproofId" column="cWaterproofId"></id>
+            <result property="cWName" column="cWName"></result>
+        </association>
+    </resultMap>
+
+    <!-- 根据编号删除商品信息 -->
+    <delete id="deleteOMGproduct" parameterType="com.zhengguan.OMGPersonal.entities.Commodity">
+        delete from commodity where cId=#{cId}
+    </delete>
+    <!-- 添加商品信息 -->
+    <insert id="addOMGproduct" parameterType="com.zhengguan.OMGPersonal.entities.Commodity">
+        insert INTO commodity(cId,cName,cModel,cPrice,cDescribe,imgName,cTypeId,cShellId,cChainId,cColorId,cDiameterId,cEspeciallyId,cMovementId,cWaterproofId) VALUES(#{cId},#{cName},#{cModel},#{cPrice},#{cDescribe},#{imgName},#{cTypeId},#{cShellId},#{cChainId},#{cColorId},#{cDiameterId},#{cEspeciallyId},#{cMovementId},#{cWaterproofId})
+    </insert>
+    <!--&lt;!&ndash; 修改商品信息 &ndash;&gt;-->
+    <update id="updateOMGproduct" parameterType="com.zhengguan.OMGPersonal.entities.Commodity">
+        update commodity set cName=#{cName},cModel=#{cModel},cPrice=#{cPrice},cDescribe=#{cDescribe},imgName=#{imgName},cTypeId=#{cTypeId},cShellId=#{cShellId},cChainId=#{cChainId},cColorId=#{cColorId},cDiameterId=#{cDiameterId},cEspeciallyId=#{cEspeciallyId},cMovementId=#{cMovementId},cWaterproofId=#{cWaterproofId}  WHERE cId=#{cId}
+    </update>
+    <!--<update id="updateOMGproduct">-->
+        <!--update commodity-->
+        <!--<set>-->
+            <!--<if test="cName!=null and cName!=''">-->
+                <!--cName =#{cName},-->
+            <!--</if>-->
+            <!--<if test="cModel!=null and cModel!=''">-->
+                <!--cModel =#{cModel},-->
+            <!--</if>-->
+            <!--<if test="cPrice!=null and cPrice!=''">-->
+                <!--cPrice=#{cPrice},-->
+            <!--</if>-->
+            <!--<if test="cDescribe!=null and cDescribe!=''">-->
+                <!--cDescribe = #{cDescribe}-->
+            <!--</if>-->
+            <!--<if test="imgName!=null and imgName!=''">-->
+                <!--imgName = #{imgName}-->
+            <!--</if>-->
+            <!--<if test="cTypeId!=null and cTypeId!=''">-->
+                <!--cTypeId = #{cTypeId}-->
+            <!--</if>-->
+            <!--<if test="cShellId!=null and cShellId!=''">-->
+                <!--cShellId = #{cShellId}-->
+            <!--</if>-->
+            <!--<if test="cChainId!=null and cChainId!=''">-->
+                <!--cChainId = #{cChainId}-->
+            <!--</if>-->
+            <!--<if test="cColorId!=null and cColorId!=''">-->
+                <!--cColorId = #{cColorId}-->
+            <!--</if>-->
+            <!--<if test="cDiameterId!=null and cDiameterId!=''">-->
+                <!--cDiameterId = #{cDiameterId}-->
+            <!--</if>-->
+            <!--<if test="cEspeciallyId!=null and cEspeciallyId!=''">-->
+                <!--cEspeciallyId = #{cEspeciallyId}-->
+            <!--</if>-->
+            <!--<if test="cMovementId!=null and cMovementId!=''">-->
+                <!--cMovementId = #{cMovementId}-->
+            <!--</if>-->
+            <!--<if test="cWaterproofId!=null and cWaterproofId!=''">-->
+                <!--cWaterproofId = #{cWaterproofId}-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where cId=#{cId}-->
+    <!--</update>-->
+
+    <!-- 商品信息分页 -->
+    <select id="selectOMGpage_product" resultMap="selectOMGAll_Map">
+        SELECT comm.cId,comm.cName,comm.cModel,comm.cPrice,comm.cDescribe,comm.cState,cty.cTName,cshe.cSName,ccha.cCName,ccolo.cCoName,cdia.cDName,ces.cEName,cmo.cMName,cwa.cWName,comm.imgName,comm.cTypeId,
+        comm.cShellId,comm.cChainId,comm.cColorId,comm.cDiameterId,comm.cEspeciallyId,comm.cMovementId,comm.cWaterproofId
+        from commodity comm,ctypetb cty,cshelltb cshe,cchaintb ccha,ccolortb ccolo,cdiametertb cdia,cespeciallytb ces,cmovementtb cmo,cwaterprooftb cwa
+         WHERE
+         comm.cTypeId = cty.cTypeId
+        and comm.cShellId = cshe.cShellId
+        and comm.cChainId = ccha.cChainId
+        and comm.cColorId = ccolo.cColorId
+        and comm.cDiameterId = cdia.cDiameterId
+        and comm.cEspeciallyId = ces.cEspeciallyId
+        and comm.cMovementId = cmo.cMovementId
+        and comm.cWaterproofId = cwa.cWaterproofId
+        limit #{realpage1},#{realpage2}
+    </select>
+    <!-- 获取商品总数 -->
+    <select id="countProduct" resultType="int">
+       select count(*) FROM commodity
+    </select>
+    <!-- 多删除 -->
+    <delete id="deletesOMGproduct">
+        delete from commodity
+        where cId in
+        <foreach collection="cId" open="(" item="cId" separator="," close=")">
+            #{cId}
+        </foreach>
+    </delete>
+
+</mapper>

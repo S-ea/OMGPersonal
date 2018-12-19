@@ -13,7 +13,7 @@ public interface UserDao {
     int deleteOMGuser(@Param("userId") int userId);
     //添加用户
     int addOMGuser(User user);
-    //修改用户
+    //修改用户信息
     int updateOMGuser(User user);
     //根据Id查询用户信息
     User selectOMGuserById(@Param("userId") int userId);

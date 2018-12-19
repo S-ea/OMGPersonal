@@ -29,5 +29,5 @@ public interface OMGServlet {
     int Sercount_product();
     //多删除
     int SerdeletesOMGproduct(@Param("cId") List<Integer>cId);
-    //sss
+    //ssss
 }

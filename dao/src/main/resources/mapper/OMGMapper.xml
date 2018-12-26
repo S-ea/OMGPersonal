@@ -31,32 +31,66 @@
         where cId=#{cId}
     </select>
 
-    <!--&lt;!&ndash;根据多条件查询商品信息&ndash;&gt;-->
-    <!--<select id="selectOMGByManytj_product" resultType="com.zhengguan.OMGPersonal.entities.Commodity">-->
-      <!--SELECT-->
-    <!--commodity.cChainId,commodity.cName,commodity.cModel,-->
-    <!--commodity.cPrice,commodity.cDescribe,commodity.cId,commodity.cState,commodity.imgId,commodity.cTypeId,commodity.cShellId,commodity.cColorId,commodity.cDiameterId,-->
-    <!--commodity.cEspeciallyId,commodity.cMovementId,commodity.cWaterproofId,imgtb.imgId,imgtb.imgRoute,imgtb.imgName,imgtb.imgDescribe,ctypetb.cTypeId,ctypetb.cTName,-->
-    <!--cshelltb.cShellId,cshelltb.cSName,cchaintb.cChainId,cchaintb.cCName,ccolortb.cColorId,ccolortb.cCoName,cdiametertb.cDiameterId,cdiametertb.cDName,cespeciallytb.cEspeciallyId,-->
-    <!--cespeciallytb.cEName,cmovementtb.cMovementId,cmovementtb.cMName,cwaterprooftb.cWaterproofId,cwaterprooftb.cWName FROM commodity-->
-    <!--INNER JOIN imgtb ON commodity.imgId = imgtb.imgId-->
-    <!--INNER JOIN ctypetb ON commodity.cTypeId = ctypetb.cTypeId-->
-    <!--INNER JOIN cshelltb ON commodity.cShellId = cshelltb.cShellId-->
-    <!--INNER JOIN cchaintb ON commodity.cChainId = cchaintb.cChainId-->
-    <!--INNER JOIN ccolortb ON commodity.cColorId = ccolortb.cColorId-->
-    <!--INNER JOIN cdiametertb ON commodity.cDiameterId = cdiametertb.cDiameterId-->
-    <!--INNER JOIN cespeciallytb ON commodity.cEspeciallyId = cespeciallytb.cEspeciallyId-->
-    <!--INNER JOIN cmovementtb ON commodity.cMovementId = cmovementtb.cMovementId-->
-    <!--INNER JOIN cwaterprooftb ON commodity.cWaterproofId = cwaterprooftb.cWaterproofId-->
-       <!--<where>-->
-           <!--<if test="cName!=null and cName!=''">-->
-               <!--and cName like concat(concat('%',#{cName}),'%');-->
-           <!--</if>-->
+    <!--根据多条件查询商品信息-->
+    <select id="selectOMGByManytj_product" resultType="com.zhengguan.OMGPersonal.entities.Commodity">
+      SELECT
+    commodity.cChainId,commodity.cName,commodity.cModel,commodity.imgName,
+    commodity.cPrice,commodity.cDescribe,commodity.cId,commodity.cState,commodity.cTypeId,commodity.cShellId,commodity.cColorId,commodity.cDiameterId,
+    commodity.cEspeciallyId,commodity.cMovementId,commodity.cWaterproofId,ctypetb.cTypeId,ctypetb.cTName,
+    cshelltb.cShellId,cshelltb.cSName,cchaintb.cChainId,cchaintb.cCName,ccolortb.cColorId,ccolortb.cCoName,cdiametertb.cDiameterId,cdiametertb.cDName,cespeciallytb.cEspeciallyId,
+    cespeciallytb.cEName,cmovementtb.cMovementId,cmovementtb.cMName,cwaterprooftb.cWaterproofId,cwaterprooftb.cWName FROM commodity
+    INNER JOIN ctypetb ON commodity.cTypeId = ctypetb.cTypeId
+    INNER JOIN cshelltb ON commodity.cShellId = cshelltb.cShellId
+    INNER JOIN cchaintb ON commodity.cChainId = cchaintb.cChainId
+    INNER JOIN ccolortb ON commodity.cColorId = ccolortb.cColorId
+    INNER JOIN cdiametertb ON commodity.cDiameterId = cdiametertb.cDiameterId
+    INNER JOIN cespeciallytb ON commodity.cEspeciallyId = cespeciallytb.cEspeciallyId
+    INNER JOIN cmovementtb ON commodity.cMovementId = cmovementtb.cMovementId
+    INNER JOIN cwaterprooftb ON commodity.cWaterproofId = cwaterprooftb.cWaterproofId
+       <where>
+           <if test="cName!=null and cName!=''">
+               and cName like concat(concat('%',#{cName}),'%')
+           </if>
+           <if test="cModel!=null and cModel!=''">
+               and cModel like concat(concat('%',#{cModel}),'%')
+           </if>
+           <if test="cTName!=null and cTName!=''">
+               and ctypetb.cTName like concat(concat('%',#{cTName}),'%')
+           </if>
+       </where>
+        limit #{realpage1},#{realpage2}
+    </select>
+    <!--根据多条件查询商品信息总数-->
+    <select id="selectOMGByManytjzs_product" resultType="com.zhengguan.OMGPersonal.entities.Commodity">
 
+        select COUNT(*)from( SELECT
+        commodity.cChainId,commodity.cName,commodity.cModel,commodity.imgName,
+        commodity.cPrice,commodity.cDescribe,commodity.cId,commodity.cState,commodity.cTypeId,commodity.cShellId,commodity.cColorId,commodity.cDiameterId,
+        commodity.cEspeciallyId,commodity.cMovementId,commodity.cWaterproofId,ctypetb.cTName,
+        cshelltb.cSName,cchaintb.cCName,ccolortb.cCoName,cdiametertb.cDName,
+        cespeciallytb.cEName,cmovementtb.cMName,cwaterprooftb.cWName FROM commodity
+        INNER JOIN ctypetb ON commodity.cTypeId = ctypetb.cTypeId
+        INNER JOIN cshelltb ON commodity.cShellId = cshelltb.cShellId
+        INNER JOIN cchaintb ON commodity.cChainId = cchaintb.cChainId
+        INNER JOIN ccolortb ON commodity.cColorId = ccolortb.cColorId
+        INNER JOIN cdiametertb ON commodity.cDiameterId = cdiametertb.cDiameterId
+        INNER JOIN cespeciallytb ON commodity.cEspeciallyId = cespeciallytb.cEspeciallyId
+        INNER JOIN cmovementtb ON commodity.cMovementId = cmovementtb.cMovementId
+        INNER JOIN cwaterprooftb ON commodity.cWaterproofId = cwaterprooftb.cWaterproofId
+        <where>
+            <if test="cName!=null and cName!=''">
+                and cName like concat(concat('%',#{cName}),'%')
+            </if>
+            <if test="cModel!=null and cModel!=''">
+                and cModel like concat(concat('%',#{cModel}),'%')
+            </if>
+            <if test="cTName!=null and cTName!=''">
+                and ctypetb.cTName like concat(concat('%',#{cTName}),'%')
+            </if>
+        </where>
+        ) A
 
-       <!--</where>-->
-    <!--</select>-->
-
+    </select>
 
     <!--获取商品所有信息-->
     <select id="selectOMGAllsy_product" resultMap="selectOMGAll_Map"  >
@@ -243,8 +277,7 @@
     </select>
     <!-- 多删除 -->
     <delete id="deletesOMGproduct">
-        delete from commodity
-        where cId in
+        delete from commodity where cId in
         <foreach collection="cId" open="(" item="cId" separator="," close=")">
             #{cId}
         </foreach>

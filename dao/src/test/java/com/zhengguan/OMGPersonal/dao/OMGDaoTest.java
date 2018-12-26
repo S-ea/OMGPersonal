@@ -34,14 +34,11 @@ public class OMGDaoTest {
         admUser.setAdmTephone("16342342342");
         System.out.println(omgDao.registerAdmName(admUser));
     }
-
     @Test
     //商品组合查询
     public void selectOMGAll_product() {
         Map<String,Object>map=new HashMap<String, Object>();
-        map.put("imgId",1101);
         map.put("cTypeId",2101);
-        map.put("cShellId",0);
         System.out.println(omgDao.selectOMGAll_product(map));
     }
     @Test
@@ -52,7 +49,7 @@ public class OMGDaoTest {
     @Test
     //根据商品的信息进行多条件查询
     public void  selectOMGByManytj_product(){
-        System.out.println(omgDao.selectOMGByManytj_product("星"));
+        System.out.println(omgDao.selectOMGByManytj_product(0,5,"星","1",""));
     }
     @Test
     //获取全部商品信息
@@ -64,7 +61,6 @@ public class OMGDaoTest {
     public void  deleteOMGproduct(){
         System.out.println(omgDao.deleteOMGproduct(12312));
     }
-
     @Test
     //添加商品信息
     public void  addOMGproduct(){
@@ -118,6 +114,11 @@ public class OMGDaoTest {
     //商品总数
     public void  countProduct(){
         System.out.println(omgDao.countProduct());
+    }
+    @Test
+    //多条件查询商品总数
+    public void  selectOMGByManytjzs_product(){
+        System.out.println(omgDao.selectOMGByManytjzs_product("星","",""));
     }
 
 

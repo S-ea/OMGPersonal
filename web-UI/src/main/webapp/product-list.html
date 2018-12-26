@@ -21,12 +21,12 @@
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
 <title>建材列表</title>
+<link rel="stylesheet" href="css/SimpleTree.css" type="text/css">
 <link rel="stylesheet" href="lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <style type="text/css">
 	table{
 		/* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
 		table-layout:fixed;
-
 	}
 	td{
 		overflow:hidden;
@@ -38,27 +38,52 @@
 		text-overflow:ellipsis;
 		text-align: center;
 	}
-
 </style>
 </head>
 <body class="pos-r">
-<!--<div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">-->
-	<!--<ul id="treeDemo" class="ztree"></ul>-->
-<!--</div>-->
-<div style="margin-left:0px;">
+<div class="pos-a" style="width:150px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
+    <div class="st_tree" style="width:200px;margin:0 auto;">
+        <ul>
+            <!--<li><a href="#" ref="hyjm">欢迎界面</a></li>-->
+            <li><a href="#" ref="xtgl">手表系列</a></li>
+            <ul show="true">
+                <li><a href="#" ref="yhgl">星座系列</a></li>
+                <li><a href="#" ref="rzck">碟飞系列</a></li>
+                <li><a href="#" ref="rzck">海马系列</a></li>
+                <li><a href="#" ref="rzck">特别系列</a></li>
+                <li><a href="#" ref="rzck">超霸系列</a></li>
+            </ul>
+            <li><a href="#" ref="xtgl">配件系列</a></li>
+            <ul show="true">
+                <li><a href="#" ref="yhgl">珠宝</a></li>
+                <li><a href="#" ref="rzck">配饰</a></li>
+            </ul>
+            <!--<li><a href="#" ref="ckgl">仓库管理</a></li>-->
+            <!--<ul>-->
+                <!--<li><a href="#" ref="kcgl">库存管理</a></li>-->
+                <!--<li><a href="#" ref="shgl">收货管理</a></li>-->
+                <!--<li><a href="#" ref="fhgl">发货管理</a></li>-->
+                <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#" ref="yhgl">用户管理</a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#" ref="rzck">日志查看</a></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+            <!--</ul>-->
+        </ul>
+    </div>
+</div>
+<div style="margin-left:140px;">
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 产品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
-		<div class="text-c"> 日期范围：
-			<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
-			-
-			<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-			<input type="text" name="" id="" placeholder=" 产品名称" style="width:250px" class="input-text">
-			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜产品</button>
+		<div class="text-c">
+			商品名称：<input type="text" id="ComName" name="ComName" class="input-text " style="width: 150px">
+			型号：<input type="text" id="ComModel" name="ComModel" class="input-text " style="width: 150px">
+			类型：<input type="text"  id="ComType" name="ComType" class="input-text " style="width: 150px">
+			<button name="" id="selectOMGtj" class="btn btn-success" type="submit" ><i class="Hui-iconfont">&#xe665;</i> 搜产品</button>
 		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="OMGProduct.delsOmg_product()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="OMGProduct.delsOmg_product()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong id="count"></strong> 条</span> </div>
 		<div class="mt-20">
 			<div style="overflow: auto; width: 100%;">
-			<table id="OMGshow_product" class="table table-border table-bordered table-bg table-hover " style="width: 1100px;height: 120px; ">
+			<table id="OMGshow_product" class="table table-border table-bordered table-bg table-hover " style="width: 100%;height: 120px; ">
 				<thead>
 					<tr class="text-c">
 						<th ><input name="" type="checkbox" value=""></th>
@@ -67,7 +92,7 @@
 						<!--<th>型号</th>-->
 						<th>价格</th>
 						<!--<th>描述</th>-->
-						<th>状态</th>
+						<!--<th>状态</th>-->
 						<th>封面</th>
 						<th>类型</th>
 						<!--<th>表壳</th>-->
@@ -97,7 +122,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="demo0"></div>
+	<div id="demo0" style="text-align: center"></div>
 </div>
 
 <!--_footer 作为公共模版分离出去-->
@@ -112,62 +137,63 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript" src="dist/layui.all.js"></script>
+<script type="text/javascript" src="js/SimpleTree.js"></script>
 <script type="text/javascript">
-    var setting = {
-        view: {
-            dblClickExpand: false,
-            showLine: false,
-            selectedMulti: false
-        },
-        data: {
-            simpleData: {
-                enable:true,
-                idKey: "id",
-                pIdKey: "pId",
-                rootPId: ""
-            }
-        },
-        callback: {
-            beforeClick: function(treeId, treeNode) {
-                var zTree = $.fn.zTree.getZTreeObj("tree");
-                if (treeNode.isParent) {
-                    zTree.expandNode(treeNode);
-                    return false;
-                } else {
-                    //demoIframe.attr("src",treeNode.file + ".html");
-                    return true;
-                }
-            }
-        }
-    };
-    var zNodes =[
-        { id:1, pId:0, name:"产品系列", open:true},
-        { id:11, pId:1, name:"星座系列"},
-        { id:111, pId:11, name:"三级分类"},
-        { id:112, pId:11, name:"三级分类"},
-        { id:113, pId:11, name:"三级分类"},
-        { id:114, pId:11, name:"三级分类"},
-        { id:115, pId:11, name:"三级分类"},
-        { id:12, pId:1, name:"碟飞系列"},
-        { id:111, pId:12, name:"三级分类"},
-        { id:13, pId:1, name:"海马系列"},
-        { id:111, pId:13, name:"三级分类"},
-        { id:14, pId:1, name:"特别系列"},
-        { id:111, pId:14, name:"三级分类"},
-        { id:15, pId:1, name:"超霸系列"},
-        { id:111, pId:15, name:"三级分类"},
-    ];
+    // var setting = {
+    //     view: {
+    //         dblClickExpand: false,
+    //         showLine: false,
+    //         selectedMulti: false
+    //     },
+    //     data: {
+    //         simpleData: {
+    //             enable:true,
+    //             idKey: "id",
+    //             pIdKey: "pId",
+    //             rootPId: ""
+    //         }
+    //     },
+    //     callback: {
+    //         beforeClick: function(treeId, treeNode) {
+    //             var zTree = $.fn.zTree.getZTreeObj("tree");
+    //             if (treeNode.isParent) {
+    //                 zTree.expandNode(treeNode);
+    //                 return false;
+    //             } else {
+    //                 //demoIframe.attr("src",treeNode.file + ".html");
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    // };
+    // var zNodes =[
+    //     { id:1, pId:0, name:"产品系列", open:true},
+    //     { id:11, pId:1, name:"星座系列"},
+    //     { id:111, pId:11, name:"三级分类"},
+    //     { id:112, pId:11, name:"三级分类"},
+    //     { id:113, pId:11, name:"三级分类"},
+    //     { id:114, pId:11, name:"三级分类"},
+    //     { id:115, pId:11, name:"三级分类"},
+    //     { id:12, pId:1, name:"碟飞系列"},
+    //     { id:111, pId:12, name:"三级分类"},
+    //     { id:13, pId:1, name:"海马系列"},
+    //     { id:111, pId:13, name:"三级分类"},
+    //     { id:14, pId:1, name:"特别系列"},
+    //     { id:111, pId:14, name:"三级分类"},
+    //     { id:15, pId:1, name:"超霸系列"},
+    //     { id:111, pId:15, name:"三级分类"},
+    // ];
 
 
-
-    $(document).ready(function(){
-        var t = $("#treeDemo");
-        t = $.fn.zTree.init(t, setting, zNodes);
-        //demoIframe = $("#testIframe");
-        //demoIframe.on("load", loadReady);
-        var zTree = $.fn.zTree.getZTreeObj("tree");
-        //zTree.selectNode(zTree.getNodeByParam("id",'11'));
-    });
+    //
+    // $(document).ready(function(){
+    //     var t = $("#treeDemo");
+    //     t = $.fn.zTree.init(t, setting, zNodes);
+    //     //demoIframe = $("#testIframe");
+    //     //demoIframe.on("load", loadReady);
+    //     var zTree = $.fn.zTree.getZTreeObj("tree");
+    //     //zTree.selectNode(zTree.getNodeByParam("id",'11'));
+    // });
 
     $('.table-sort').dataTable({
         "aaSorting": [[ 1, "desc" ]],//默认第几个排序
@@ -351,7 +377,7 @@
                                         $.each(data.data,function (index,obj) {
                                             var tr=$("<tr class='text-c va-m' />");
                                             var td1=$("<td style='text-align: center;  '/>");
-                                            var chb=$("<input type='checkbox' name='cIds' id='cIds'/>").val(obj.cId).appendTo(td1);
+                                            var chb=$("<input type='checkbox' name='cIdcs' id='cIdcs'/>").val(obj.cId).appendTo(td1);
                                             tr.append(td1);
                                             var td2=$("<td style='text-align: center;  '/>").html(obj.cId);
                                             tr.append(td2);
@@ -363,8 +389,8 @@
                                             tr.append(td5);
                                             // var td6=$("<td style='text-align: center;  '/>").html(obj.cDescribe);
                                             // tr.append(td6);
-                                            var td7=$("<td style='text-align: center;  '/>").html(obj.cState);
-                                            tr.append(td7);
+                                            // var td7=$("<td style='text-align: center;  '/>").html(obj.cState);
+                                            // tr.append(td7);
                                             var tdimg=$("<td style='text-align: center;  '/>").html("<img src=img/"+obj.imgName+" width='100px' height='80px'/>");
                                             tr.append(tdimg);
                                             var td8=$("<td style='text-align: center;  '/>").html(obj.ctypetb.ctname);
@@ -449,18 +475,22 @@
 //       $("#cMovementId").val(commodity.cMovementId);
 //       $("#cWaterproofId").val(commodity.cWaterproofId);
 //   },
+       //批量删除
         delsOmg_product:function(){
-            var cIdsArray=$("input[name=cIds]:checked").serializeArray();
+            var cIdsArray=$("input[name=cIdcs]:checked").serializeArray();
+            // console.log(cIdsArray);
             var cIds=[];
             for(var i=0;i<cIdsArray.length;i++){
                 cIds.push(parseInt(cIdsArray[i].value));
             }
+            if(cIds.length>0){
             layer.confirm('确认要删除吗？',function(index){
                 $.ajax({
                     url:"product/deletesOMG_product",
                     type:"POST",
                     data:JSON.stringify(cIds),
                     dataType:"json",
+                    contentType:"application/json;charset=utf-8",
                     success:function (data) {
                         if(data.code==1&&data.data>0){
                             layer.msg('已删除!',{icon:1,time:1000});
@@ -474,12 +504,99 @@
                     }
                 });
             });
+		}else{
+			layer.msg('请选择删除选项',{icon:2,time:1000});
+		}
 
         },
+        //模糊查询商品信息
+        selsOmg_product:function () {
+            $.ajax({
+                url:"product/selectOMGByManytjzs_product",
+                data:{cName :$("#ComName").val(),cModel:$("#ComModel").val(),cTName:$("#ComType").val()},
+                success: function(data) {
+                    $("#count").html(data.data);
+                    layui.use(['laypage', 'layer'],function() {
+                        var laypage = layui.laypage
+                            , layer = layui.layer;
+                        //总页数大于页码总数
+                        laypage.render({
+                            elem: 'demo0',
+                            limit: 3,
+                            count: data.data,
+                            jump:function (obj) {
+                                $.ajax({
+                                    url:"product/SerselOMGByManytj_product",
+                                    data:{param1:obj.curr,param2:obj.limit,cName :$("#ComName").val(),cModel:$("#ComModel").val(),cTName:$("#ComType").val()},
+                                    success:function (data) {
+                                        if(data.code==1){
+                                            $("#OMGshow_product tr:gt(0)").remove();
+                                            $.each(data.data,function (index,obj) {
+                                                var tr=$("<tr class='text-c va-m' />");
+                                                var td1=$("<td style='text-align: center;  '/>");
+                                                var chb=$("<input type='checkbox' name='cIdcs' id='cIdcs'/>").val(obj.cId).appendTo(td1);
+                                                tr.append(td1);
+                                                var td2=$("<td style='text-align: center;  '/>").html(obj.cId);
+                                                tr.append(td2);
+                                                var td3=$("<td style='text-align: center;  '/>").html(obj.cName);
+                                                tr.append(td3);
+                                                var td5=$("<td style='text-align: center;  '/>").html(obj.cPrice);
+                                                tr.append(td5);
+                                                var tdimg=$("<td style='text-align: center;  '/>").html("<img src=img/"+obj.imgName+" width='100px' height='80px'/>");
+                                                tr.append(tdimg);
+                                                // var td8=$("<td style='text-align: center;  '/>").html(obj.ctypetb.ctname);
+                                                // tr.append(td8);
+                                                var td16=$("<td class='td-status' style='text-align: center;  '/>");
+                                                tr.append(td16);
+                                                var span16=$("<span class=\"label label-success radius\">已发布</span>");
+                                                td16.append(span16);
+                                                var a16= $("<a style=\"text-decoration:none\" onClick=\"product_stop(this,'10001')\" href=\"javascript:;\" title=\"下架\"></a>");
+                                                var i16=$("<i class=\"Hui-iconfont\"></i>").html("&#xe6de;");
+                                                a16.append(i16);
+                                                var  a17=$("<a style='text-decoration:none' class='ml-5' onClick='product_edit(\"编辑\",\"product-add.html\","+obj.cId+")'   href='javascript:;' title='编辑'  />");
+                                                var i17=$("<i class='Hui-iconfont'   >&#xe6df;</i>").data("commodity",obj);
+                                                a17.append(i17);
+                                                var  a18=$("<a style='text-decoration:none' class='ml-5' onClick='OMGProduct.product_del("+obj.cId+",this)' href='javascript:;' title='删除'/>");
+                                                var i18=$("<i class='Hui-iconfont'>&#xe6e2;</i>");
+                                                a18.append(i18);
+                                                $("<td class='td-manage'  />").append(a18).append(a17).append(a16).appendTo(tr);
+                                                $("#OMGshow_product").append(tr);
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                        });
+                    })
+                },
+            });
 
+        },
     }
     OMGProduct.init();
 
+
+    $(function(){
+
+        $(".st_tree").SimpleTree({
+
+            /* 可无视代码部分*/
+            click:function(a){
+                if(!$(a).attr("hasChild"))
+                    alert($(a).attr("ref"));
+            }
+
+        });
+
+    });
+
+    $("#selectOMGtj").click(function () {
+        if ($("#ComName").val()==""&&$("#ComModel").val()==""&&$("#ComType").val()=="") {
+           OMGProduct.showlistOMGpage();
+        }else {
+            OMGProduct.selsOmg_product();
+        }
+    })
 </script>
 </body>
 </html>

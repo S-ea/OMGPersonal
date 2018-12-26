@@ -8,6 +8,7 @@ import com.zhengguan.OMGPersonal.entities.NoteResult;
 import com.zhengguan.OMGPersonal.servlet.OMGServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +27,7 @@ public class OMGController {
     OMGServlet omgServlet;
 
     //后台登录页面
-    @RequestMapping("/admLogin")
+    @RequestMapping("product/admLogin")
     public String admLogin(){
         return "/login.html";
     }
@@ -207,6 +208,20 @@ public class OMGController {
         return R.ok(omgServlet.Sercount_product());
     }
 
+    //模糊查询
+    @RequestMapping("/SerselOMGByManytj_product")
+    @ResponseBody
+    public R SerselOMGByManytj_product(@RequestParam(defaultValue ="1")int param1, @RequestParam(defaultValue = "4")int param2,@RequestParam String cName,String cModel,String cTName){
+        return R.ok(omgServlet.SerselOMGByManytj_product(param1,param2,cName,cModel,cTName));
+    }
+
+    //模糊查询总数
+    @RequestMapping("/selectOMGByManytjzs_product")
+    @ResponseBody
+    public R selectOMGByManytjzs_product( String cName,String cModel,String cTName){
+        return R.ok(omgServlet.selectOMGByManytjzs_product(cName,cModel,cTName));
+    }
+
 
     //删除商品之后重新到首页
     @RequestMapping("/deleteProducttz")
@@ -217,9 +232,9 @@ public class OMGController {
     //多删除
     @RequestMapping("/deletesOMG_product")
     @ResponseBody
-    public R deletesOMG_product( @RequestParam("cId") List<Integer> cId)
+    public R deletesOMG_product( @RequestBody List<Integer> cIds)
     {
-        return R.ok(omgServlet.SerdeletesOMGproduct(cId));
+        return R.ok(omgServlet.SerdeletesOMGproduct(cIds));
     }
 
 }

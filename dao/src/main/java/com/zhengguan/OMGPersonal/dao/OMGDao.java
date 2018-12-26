@@ -17,7 +17,7 @@ public interface OMGDao {
     //商品组合查询
     Commodity selectOMGAll_product(Map<String,Object>map);
     //根据商品信息模糊多条件查询商品信息
-    List<Commodity>selectOMGByManytj_product(@Param("cName") String cName);
+    List<Commodity>selectOMGByManytj_product(@Param("realpage1")int param1,@Param("realpage2")int param2,@Param("cName") String cName,@Param("cModel") String cModel,@Param("cTName") String cTName);
     //获取商品所有信息
     List<Commodity>selectOMGAllsy_product();
     //删除商品
@@ -26,13 +26,13 @@ public interface OMGDao {
     int addOMGproduct(Commodity commodity);
     //修改商品
     int updateOMGproduct(Commodity commodity);
-
     //分页
     List<Commodity>selectOMGpage_product(@Param("realpage1")int param1,@Param("realpage2")int param2);
-
     //商品总数
     int countProduct();
-
     //多删除
     int deletesOMGproduct(@Param("cId") List<Integer>cId);
+    //多条件查询商品总数
+    int selectOMGByManytjzs_product(@Param("cName") String cName,@Param("cModel") String cModel,@Param("cTName") String cTName);
+
 }

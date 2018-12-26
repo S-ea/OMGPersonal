@@ -6,6 +6,7 @@ import com.zhengguan.OMGPersonal.entities.Commodity;
 import com.zhengguan.OMGPersonal.entities.NoteResult;
 
 import com.zhengguan.OMGPersonal.servlet.OMGServlet;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
@@ -91,12 +92,40 @@ public class OMGServletImpl implements OMGServlet{
         return omgDao.countProduct();
     }
 
+    //模糊查询商品总数
+    public int selectOMGByManytjzs_product(String cName, String cModel, String cTName) {
+//        if(StringUtils.isEmpty(cName)){
+//            cName=null;
+//        }
+//        if(StringUtils.isEmpty(cModel)){
+//            cModel=null;
+//        }
+//        if(StringUtils.isEmpty(cTName)){
+//            cTName=null;
+//        }
+        return omgDao.selectOMGByManytjzs_product(cName,cModel,cTName);
+    }
     //多删除
-    public int SerdeletesOMGproduct(List<Integer> cId) {
+    public int SerdeletesOMGproduct(List<Integer>cId) {
         if (cId==null||cId.size()<=0){
             return 0;
         }
         return omgDao.deletesOMGproduct(cId);
+    }
+
+    //模糊查询
+    public List<Commodity> SerselOMGByManytj_product(int param1, int param2, String cName, String cModel, String cTName) {
+//        if(StringUtils.isEmpty(cName)){
+//            cName=null;
+//        }
+//        if(StringUtils.isEmpty(cModel)){
+//            cModel=null;
+//        }
+//        if(StringUtils.isEmpty(cTName)){
+//            cTName=null;
+//        }
+        param1=(param1-1)*param2;
+        return omgDao.selectOMGByManytj_product(param1,param2,cName,cModel,cTName);
     }
 
 }

@@ -31,7 +31,6 @@ public class UserSerlvetImpl implements UserServlet{
     public int SerupdateOMGuser(User user) {
         return userDao.updateOMGuser(user);
     }
-
     //根据编号查询用户信息
     public User SerselectOMGuserById(int userId) {
         User user=userDao.selectOMGuserById(userId);

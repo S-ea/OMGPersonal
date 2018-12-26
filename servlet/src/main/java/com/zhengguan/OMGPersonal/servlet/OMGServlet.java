@@ -27,7 +27,10 @@ public interface OMGServlet {
     List<Commodity>SerselectOMGpage_product(@Param("realpage1")int param1,@Param("realpage2")int param2);
     //获取总数
     int Sercount_product();
+    //多条件查询商品总数
+    int selectOMGByManytjzs_product(@Param("cName") String cName,@Param("cModel") String cModel,@Param("cTName") String cTName);
     //多删除
     int SerdeletesOMGproduct(@Param("cId") List<Integer>cId);
-    //ssssss
+    //模糊查询商品信息
+    List<Commodity>SerselOMGByManytj_product(@Param("realpage1")int param1,@Param("realpage2")int param2,@Param("cName") String cName,@Param("cModel") String cModel,@Param("cTName") String cTName);
 }
